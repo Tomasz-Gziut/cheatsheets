@@ -8,7 +8,6 @@ function Home() {
   return (
     <>
       <h1>Cheatsheets:</h1>
-
       <div>
         {otherRoutes.map((route) => (
           <div key={route.path}>

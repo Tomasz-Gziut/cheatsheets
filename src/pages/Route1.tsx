@@ -1,20 +1,22 @@
 import { Link } from "react-router-dom";
 import {
   Card,
-  CardAction,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 function Route1() {
   return (
     <>
       <Link to="/" className="text-blue-600">
-        Back
+        <Button variant="outline" size="icon" aria-label="Submit">
+          Back
+        </Button>
       </Link>
+
       <Card>
         <CardHeader>
           <CardTitle>Zagadnienia na kartkówkę 9.10.</CardTitle>

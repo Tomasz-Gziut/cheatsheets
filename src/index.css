@@ -114,7 +114,31 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
+  }
+
+  @media (max-width: 640px) {
+    html {
+      font-size: 14px;
+    }
+
+    .container {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+  }
+
+  button,
+  a {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  @media (max-width: 768px) {
+    .prose {
+      line-height: 1.6;
+    }
   }
 }

@@ -15,11 +15,15 @@ export const availableRoutes = [
 
 function App() {
   return (
-    <Routes>
-      {availableRoutes.map((route) => (
-        <Route key={route.path} path={route.path} element={<route.element />} />
-      ))}
-    </Routes>
+    <div className="min-h-screen bg-background">
+      <div className="container mx-auto px-4 py-8 max-w-4xl">
+        <Routes>
+          {availableRoutes.map((route) => (
+            <Route key={route.path} path={route.path} element={<route.element />} />
+          ))}
+        </Routes>
+      </div>
+    </div>
   );
 }
 

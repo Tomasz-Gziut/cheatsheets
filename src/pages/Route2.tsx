@@ -6,8 +6,15 @@ function Route2() {
   return (
     <div className="space-y-6">
       <div className="flex items-center mb-6">
-        <Link to="/" className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors duration-200">
-          <Button variant="outline" size="sm" className="flex items-center gap-2">
+        <Link
+          to="/"
+          className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors duration-200"
+        >
+          <Button
+            variant="outline"
+            size="sm"
+            className="flex items-center gap-2"
+          >
             ← Back
           </Button>
         </Link>

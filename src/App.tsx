@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Route1 from "./pages/Route1";
 import Route2 from "./pages/Route2";
+import { Footer } from "@/components/ui/footer";
 
 export const availableRoutes = [
   { path: "/", name: "Home", element: Home },
@@ -15,8 +16,8 @@ export const availableRoutes = [
 
 function App() {
   return (
-    <div className="min-h-screen bg-background">
-      <div className="container mx-auto px-4 py-8 max-w-4xl">
+    <div className="min-h-screen bg-background flex flex-col">
+      <div className="flex-1">
         <Routes>
           {availableRoutes.map((route) => (
             <Route
@@ -27,6 +28,7 @@ function App() {
           ))}
         </Routes>
       </div>
+      <Footer />
     </div>
   );
 }

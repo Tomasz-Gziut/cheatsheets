@@ -1,7 +1,4 @@
-const isDevelopment = import.meta.env.DEV;
-const API_BASE_URL = isDevelopment 
-  ? "" 
-  : import.meta.env.VITE_API_URL || "https://cheatsheets-api.onrender.com";
+const API_BASE_URL = import.meta.env.VITE_API_URL || "https://cheatsheets-api.onrender.com";
 
 export interface Route {
   id: string;
@@ -28,7 +25,7 @@ const slugify = (text: string): string => {
 export const fetchRoutes = async (): Promise<Route[]> => {
   try {
     const url = `${API_BASE_URL}/notes`;
-    console.log("Fetching routes from:", url, "(dev:", isDevelopment, ")");
+    console.log("Fetching routes from:", url);
     
     const response = await fetch(url, {
       method: "GET",

@@ -62,8 +62,6 @@ function NoteDetail() {
         <div className="text-sm text-muted-foreground mb-8 space-y-1">
           <p>Created: {new Date(note.created_at).toLocaleDateString()}</p>
           <p>Updated: {new Date(note.updated_at).toLocaleDateString()}</p>
-          <p>Locked: {note.locked ? "Yes" : "No"}</p>
-          <p>Visible: {note.visible ? "Yes" : "No"}</p>
         </div>
         {(note as any).content && (
           <div className="prose dark:prose-invert max-w-none mb-8">

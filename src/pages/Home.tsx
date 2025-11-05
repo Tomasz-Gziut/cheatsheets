@@ -34,7 +34,7 @@ function Home() {
           Cheatsheets
         </h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {routes.map((route) => (
+          {routes.filter((route) => route.visible).map((route) => (
             <Link key={route.id} to={route.path || "/"} state={{ id: route.id }}>
               <Card className="h-full hover:shadow-lg transition-shadow duration-200 cursor-pointer">
                 <CardHeader>
@@ -53,10 +53,8 @@ function Home() {
                     ))}
                   </div>
                   <div className="text-xs text-muted-foreground space-y-1">
-                    <p>Created: {new Date(route.created_at).toLocaleDateString()}</p>
-                    <p>Updated: {new Date(route.updated_at).toLocaleDateString()}</p>
-                    <p>Locked: {route.locked ? "Yes" : "No"}</p>
-                    <p>Visible: {route.visible ? "Yes" : "No"}</p>
+                    <p>Created: {new Date(route.created_at).toLocaleString(undefined, { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' })}</p>
+                    <p>Updated: {new Date(route.updated_at).toLocaleString(undefined, { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' })}</p>
                   </div>
                 </CardHeader>
               </Card>

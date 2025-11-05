@@ -9,6 +9,7 @@ export interface Route {
   visible: boolean;
   created_at: string;
   updated_at: string;
+  slug: string;
   path?: string;
   name?: string;
 }
@@ -44,10 +45,11 @@ export const fetchRoutes = async (): Promise<Route[]> => {
     
     const data: Route[] = await response.json();
     console.log("Successfully fetched routes:", data);
+    console.log("First item structure:", data[0]);
 
     return data.map((item) => ({
       ...item,
-      path: `/${slugify(item.title)}`,
+      path: `/${item.slug || slugify(item.title)}`,
       name: item.title,
     }));
   } catch (error) {

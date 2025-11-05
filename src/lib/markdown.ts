@@ -1,7 +1,7 @@
 import React from "react";
 
 interface ParsedElement {
-  type: "p" | "ul";
+  type: "p" | "ul" | "hr";
   size?: "lg" | "base" | "sm";
   content: React.ReactNode;
   key: string;
@@ -78,6 +78,17 @@ export const parseMarkdownContent = (content: string): React.ReactNode => {
       return;
     }
 
+    // Horizontal separator
+    if (trimmedLine === "---") {
+      flushListItems();
+      elements.push({
+        type: "hr",
+        content: null,
+        key: `hr-${elementKey++}`,
+      });
+      return;
+    }
+
     // Heading 1 (largest - text-lg)
     if (trimmedLine.startsWith("# ")) {
       flushListItems();
@@ -146,6 +157,8 @@ export const parseMarkdownContent = (content: string): React.ReactNode => {
       }
       case "ul":
         return React.createElement("ul", { key: el.key, className: `list-disc list-inside space-y-2 ${baseClasses}` }, el.content);
+      case "hr":
+        return React.createElement("hr", { key: el.key, className: "my-6 border-t border-muted-foreground" });
       default:
         return null;
     }

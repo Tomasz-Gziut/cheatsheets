@@ -11,8 +11,6 @@ const formatText = (text: string): React.ReactNode[] => {
   const parts: React.ReactNode[] = [];
   let lastIndex = 0;
   
-  // Obsługujemy zarówno **bold** jak i *italic*
-  // Ważne: najpierw obsługujemy ** żeby nie zderzało się z pojedynczymi *
   const regex = /(\*\*(.+?)\*\*)|(\*(.+?)\*)/g;
   let match;
 
@@ -21,16 +19,9 @@ const formatText = (text: string): React.ReactNode[] => {
       parts.push(text.slice(lastIndex, match.index));
     }
     
-    // match[1] - całe **text** lub *text*
-    // match[2] - tekst wewnątrz **
-    // match[3] - całe *text*
-    // match[4] - tekst wewnątrz *
-    
     if (match[2]) {
-      // **bold**
       parts.push(React.createElement("strong", { key: `bold-${match.index}` }, match[2]));
     } else if (match[4]) {
-      // *italic*
       parts.push(React.createElement("em", { key: `italic-${match.index}` }, match[4]));
     }
     
@@ -44,10 +35,9 @@ const formatText = (text: string): React.ReactNode[] => {
   return parts.length > 0 ? parts : [text];
 };
 
-export const parseMarkdownContent = (content: string): React.ReactNode => {
+export const parseMarkdownContent = (content: string, enableBold: boolean = true): React.ReactNode => {
   if (!content) return null;
 
-  // Obsługujemy zarówno \n, \r\n jak i escapeowany \\n z API
   const normalizedContent = content.replace(/\\n/g, "\n");
   const lines = normalizedContent.split(/\r?\n/);
   const elements: ParsedElement[] = [];
@@ -72,13 +62,11 @@ export const parseMarkdownContent = (content: string): React.ReactNode => {
   lines.forEach((line) => {
     const trimmedLine = line.trim();
 
-    // Skip empty lines
     if (!trimmedLine) {
       flushListItems();
       return;
     }
 
-    // Horizontal separator
     if (trimmedLine === "---") {
       flushListItems();
       elements.push({
@@ -89,7 +77,6 @@ export const parseMarkdownContent = (content: string): React.ReactNode => {
       return;
     }
 
-    // Heading 1 (largest - text-lg)
     if (trimmedLine.startsWith("# ")) {
       flushListItems();
       const text = trimmedLine.slice(2).trim();
@@ -100,7 +87,6 @@ export const parseMarkdownContent = (content: string): React.ReactNode => {
         key: `h1-${elementKey++}`,
       });
     }
-    // Heading 2 (medium - text-base)
     else if (trimmedLine.startsWith("## ")) {
       flushListItems();
       const text = trimmedLine.slice(3).trim();
@@ -111,7 +97,6 @@ export const parseMarkdownContent = (content: string): React.ReactNode => {
         key: `h2-${elementKey++}`,
       });
     }
-    // Heading 3 (small - text-sm)
     else if (trimmedLine.startsWith("### ")) {
       flushListItems();
       const text = trimmedLine.slice(4).trim();
@@ -122,12 +107,10 @@ export const parseMarkdownContent = (content: string): React.ReactNode => {
         key: `h3-${elementKey++}`,
       });
     }
-    // List item
     else if (trimmedLine.startsWith("- ")) {
       const itemText = trimmedLine.slice(2).trim();
       listItems.push(itemText);
     }
-    // Regular paragraph
     else {
       flushListItems();
       elements.push({
@@ -141,16 +124,15 @@ export const parseMarkdownContent = (content: string): React.ReactNode => {
 
   flushListItems();
 
-  // Create React elements with proper styling
   return elements.map((el) => {
     const baseClasses = "text-foreground mb-4";
     
     switch (el.type) {
       case "p": {
         const sizeClasses = {
-          lg: "text-lg font-bold",
-          base: "text-base font-bold",
-          sm: "text-sm font-bold",
+          lg: enableBold ? "text-lg font-bold" : "text-lg",
+          base: enableBold ? "text-base font-bold" : "text-base",
+          sm: enableBold ? "text-sm font-bold" : "text-sm",
         };
         const size = el.size || "base";
         return React.createElement("p", { key: el.key, className: `${sizeClasses[size]} ${baseClasses}` }, el.content);

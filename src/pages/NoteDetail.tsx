@@ -80,7 +80,7 @@ function NoteDetail() {
                 <div key={term} className="bg-secondary p-4 rounded">
                   <h3 className="font-bold text-foreground">{term}</h3>
                   <div className="text-muted-foreground space-y-2">
-                    {parseMarkdownContent(String(definition))}
+                    {parseMarkdownContent(String(definition), false)}
                   </div>
                 </div>
               ))}

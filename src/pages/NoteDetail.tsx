@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { fetchNoteById, type Route } from "@/lib/api";
+import { parseMarkdownContent } from "@/lib/markdown";
 
 function NoteDetail() {
   const location = useLocation();
@@ -64,9 +65,11 @@ function NoteDetail() {
           <p>Updated: {new Date(note.updated_at).toLocaleString(undefined, { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' })}</p>
         </div>
         {(note as any).content && (
-          <div className="prose dark:prose-invert max-w-none mb-8">
+          <div className="max-w-none mb-8">
             <h2 className="text-2xl font-bold text-foreground mb-4">Content</h2>
-            <p className="text-foreground">{(note as any).content}</p>
+            <div className="text-foreground space-y-4">
+              {parseMarkdownContent((note as any).content)}
+            </div>
           </div>
         )}
         {(note as any).terms && Object.keys((note as any).terms).length > 0 && (
@@ -76,7 +79,9 @@ function NoteDetail() {
               {Object.entries((note as any).terms).map(([term, definition]) => (
                 <div key={term} className="bg-secondary p-4 rounded">
                   <h3 className="font-bold text-foreground">{term}</h3>
-                  <p className="text-muted-foreground">{String(definition)}</p>
+                  <div className="text-muted-foreground space-y-2">
+                    {parseMarkdownContent(String(definition), false)}
+                  </div>
                 </div>
               ))}
             </div>

@@ -53,8 +53,8 @@ function Home() {
                     ))}
                   </div>
                   <div className="text-xs text-muted-foreground space-y-1">
-                    <p>Created: {new Date(route.created_at).toLocaleDateString()}</p>
-                    <p>Updated: {new Date(route.updated_at).toLocaleDateString()}</p>
+                    <p>Created: {new Date(route.created_at).toLocaleString(undefined, { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' })}</p>
+                    <p>Updated: {new Date(route.updated_at).toLocaleString(undefined, { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' })}</p>
                   </div>
                 </CardHeader>
               </Card>
